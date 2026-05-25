@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical VA — Practical Projects</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f3;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: #ffffff;
+    border: 1px solid #e2e2de;
+    border-radius: 14px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #E1F5EE;
+    color: #085041;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .hero-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+  .hero-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    max-width: 680px;
+    margin-bottom: 1.75rem;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+  }
+  .info-tile {
+    background: #f9f9f7;
+    border: 1px solid #e2e2de;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .info-tile-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 5px;
+  }
+  .info-tile-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.4;
+  }
+
+  /* ── Data intro section ── */
+  .data-section {
+    border: 1px solid #e2e2de;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+    background: #fff;
+  }
+  .data-section-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    background: #f9f9f7;
+    border-bottom: 1px solid #e2e2de;
+  }
+  .data-icon {
+    width: 36px;
+    height: 36px;
+    background: #E1F5EE;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .data-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+  }
+  .data-section-sub {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+  }
+  .data-section-body {
+    padding: 20px 24px;
+  }
+  .data-block {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #efefed;
+    font-size: 13.5px;
+    color: #444;
+    line-height: 1.8;
+  }
+  .data-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .data-block strong {
+    font-weight: 600;
+    color: #111;
+  }
+
+  /* ── Section heading ── */
+  .proj-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e2e2de;
+  }
+  .proj-section-icon {
+    font-size: 22px;
+  }
+  .proj-section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* ── Project cards ── */
+  .pcard {
+    background: #fff;
+    border: 1px solid #e2e2de;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .pcard-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 24px;
+    border-bottom: 1px solid #e2e2de;
+    background: #fafaf8;
+  }
+  .pnum {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #E1F5EE;
+    color: #085041;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .pcard-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 4px;
+  }
+  .pcard-tool {
+    font-size: 12px;
+    color: #888;
+  }
+  .pcard-body {
+    padding: 20px 24px;
+  }
+  .intro-box {
+    background: #f9f9f7;
+    border: 1px solid #e2e2de;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+  .intro-box p {
+    font-size: 13.5px;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  .intro-box p:last-child { margin-bottom: 0; }
+  .intro-box strong { font-weight: 600; color: #111; }
+  .intro-box a { color: #1D9E75; }
+
+  /* ── Section labels ── */
+  .slabel {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #888;
+    margin: 20px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #efefed;
+  }
+  .slabel:first-of-type { margin-top: 0; }
+
+  /* ── Tables ── */
+  .ftable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 6px;
+    table-layout: fixed;
+  }
+  .ftable th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #666;
+    background: #f5f5f3;
+    border-bottom: 1px solid #e2e2de;
+    letter-spacing: 0.04em;
+  }
+  .ftable th:first-child { width: 44%; }
+  .ftable td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0ee;
+    color: #333;
+    vertical-align: top;
+    word-break: break-word;
+  }
+  .ftable tr:last-child td { border-bottom: none; }
+  .ftable tr:hover td { background: #fafaf8; }
+  .fn { color: #666; }
+
+  /* ── Pills ── */
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .pg { background: #E1F5EE; color: #085041; }
+  .pa { background: #FAEEDA; color: #633806; }
+  .pb { background: #E6F1FB; color: #0C447C; }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: #f9f9f7;
+    border: 1px solid #e2e2de;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #555;
+  }
+  .legend-item { display: flex; align-items: center; gap: 7px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .ld-g { background: #1D9E75; }
+  .ld-a { background: #BA7517; }
+  .ld-b { background: #185FA5; }
+
+  /* ── Steps ── */
+  .step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .sdot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #E6F1FB;
+    color: #185FA5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .stext {
+    font-size: 13.5px;
+    color: #333;
+    line-height: 1.75;
+    padding-top: 1px;
+  }
+  .stext strong { font-weight: 600; color: #111; }
+  .stext em { font-style: italic; color: #555; }
+
+  /* ── EMR link box ── */
+  .emr-link-box {
+    background: #E6F1FB;
+    border: 1px solid #B5D4F4;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 10px 0 20px;
+  }
+  .emr-link-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #185FA5;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 6px;
+  }
+  .emr-link-url {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #185FA5;
+    text-decoration: none;
+  }
+  .emr-link-url:hover { text-decoration: underline; }
+  .emr-note {
+    font-size: 12.5px;
+    color: #378ADD;
+    margin-top: 8px;
+    line-height: 1.65;
+  }
+  .emr-note strong { font-weight: 600; }
+
+  /* ── Deliverable ── */
+  .deliv {
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: #f9f9f7;
+    border-left: 3px solid #1D9E75;
+    border-radius: 0 8px 8px 0;
+  }
+  .deliv.blue { border-left-color: #185FA5; }
+  .deliv-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #085041;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 6px;
+  }
+  .deliv.blue .deliv-label { color: #0C447C; }
+  .deliv-text {
+    font-size: 13.5px;
+    color: #333;
+    line-height: 1.75;
+  }
+  .deliv-text em { font-style: italic; }
+
+  /* ── EMR card accent ── */
+  .pcard-emr { border: 2px solid #B5D4F4; }
+  .pcard-emr .pcard-head { background: #EBF4FD; border-bottom-color: #B5D4F4; }
+  .pcard-emr .pnum { background: #B5D4F4; color: #0C447C; }
+
+  /* ── Divider ── */
+  hr.div { border: none; border-top: 1px solid #e2e2de; margin: 2.5rem 0; }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; }
+    .page { padding: 1rem; }
+    .pcard { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 1.25rem; }
+    .pcard-body, .pcard-head, .data-section-body { padding: 14px 16px; }
+    .hero-title { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">&#9679; Medical VA Training Program</div>
+    <div class="hero-title">Practical Projects — Patient Data Management</div>
+    <p class="hero-desc">
+      These practical projects are designed to take you from theory to real-world action. You will work with actual patient data, use professional healthcare tools, and complete tasks that a working Medical Virtual Assistant does every single day. By the end of these projects, you will have hands-on experience managing patient records, verifying insurance, scheduling appointments, building a digital patient database, and registering a patient in a live Electronic Medical Records (EMR) system.
+    </p>
+    <div class="info-grid">
+      <div class="info-tile">
+        <div class="info-tile-label">Total projects</div>
+        <div class="info-tile-val">5 hands-on projects</div>
+      </div>
+      <div class="info-tile">
+        <div class="info-tile-label">Patient record</div>
+        <div class="info-tile-val">Daniel James Thompson</div>
+      </div>
+      <div class="info-tile">
+        <div class="info-tile-label">Tools used</div>
+        <div class="info-tile-val">Airtable + OpenEMR</div>
+      </div>
+      <div class="info-tile">
+        <div class="info-tile-label">Ends at</div>
+        <div class="info-tile-val">EMR patient registration</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About the data -->
+  <div class="data-section">
+    <div class="data-section-head">
+      <div class="data-icon">&#128196;</div>
+      <div>
+        <div class="data-section-title">About the patient data</div>
+        <div class="data-section-sub">Read this carefully before starting any project</div>
+      </div>
+    </div>
+    <div class="data-section-body">
+      <div class="data-block">
+        <strong>What is this data?</strong> You have been provided with a complete, hypothetical patient record for a patient named <strong>Mr. Daniel James Thompson Jr.</strong> This is a fictional record created for training purposes only — it is not a real person. The record contains everything a medical office would collect when a new patient registers: their personal details, contact information, employer, insurance, and communication preferences.
+      </div>
+      <div class="data-block">
+        <strong>Why does it exist?</strong> In a real medical practice, you will receive patient information like this every day. As a Medical VA, your job is to take that raw information and accurately enter it into various systems — intake forms, databases, and EMR software. Making mistakes here causes real problems: wrong insurance details can lead to rejected claims, wrong contact info means the patient never gets their appointment reminder, and missing emergency contacts can be dangerous. Accuracy is everything.
+      </div>
+      <div class="data-block">
+        <strong>How should you use the data in these projects?</strong> Each project tells you exactly which fields to use and shows you the exact value to type in. Look for the <span class="pill pg">green pills</span> — those are values from the patient's personal and primary data. <span class="pill pa">Amber pills</span> are secondary insurance (Aetna/Sarah Thompson). <span class="pill pb">Blue pills</span> are tertiary insurance (Medicaid) and EMR steps. Your job is to take those values and enter them exactly as shown into the correct place in the form, table, or system the project asks you to use. Do not guess, do not make up information, and do not skip fields. If a field says N/A, enter N/A exactly as shown.
+      </div>
+      <div class="data-block">
+        <strong>The record has 9 sections:</strong> Who (personal identity), Contact (address and phones), Choices (provider and communication preferences), Employer, Stats (demographics and income), Related/Guardian (spouse details), and three insurance layers — Primary (Blue Cross Blue Shield), Secondary (Aetna), and Tertiary (Medicaid). You will use all 9 sections across these projects.
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects heading -->
+  <div class="proj-section-header">
+    <span class="proj-section-icon">&#128193;</span>
+    <span class="proj-section-title">Practical Projects</span>
+  </div>
+
+  <!-- Project 1 -->
+  <div class="pcard">
+    <div class="pcard-head">
+      <div class="pnum">1</div>
+      <div>
+        <div class="pcard-title">Appointment scheduling script</div>
+        <div class="pcard-tool">Script writing / Communication</div>
+      </div>
+    </div>
+    <div class="pcard-body">
+      <div class="intro-box">
+        <p><strong>What you are doing:</strong> You are writing a script — like a word-for-word conversation — that a Medical VA would use when calling a patient to schedule their appointment. Think of it like a play script: you write both what you (the VA) say and what prompts you use to gather information from the patient.</p>
+        <p><strong>Why this matters:</strong> In a real clinic, the first time a patient hears from you is often over the phone. If you sound unprepared, forget to ask for their insurance, or fail to mention the co-pay, it creates a bad experience and causes problems on the day of the visit. A well-written script ensures every VA says the right things every time, regardless of how nervous they feel.</p>
+        <p><strong>What to produce:</strong> Write a script that starts from the greeting ("Good morning, may I speak with Mr. Thompson?") and ends with a confirmation. Include a follow-up confirmation message — either an SMS or email — using the patient's actual contact details from the record below.</p>
+      </div>
+      <div class="slabel">Fields and data to use</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to use</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Patient name / preferred name</td><td><span class="pill pg">Mr. Daniel James Thompson Jr.</span> — address him as <span class="pill pg">Dan</span></td></tr>
+          <tr><td class="fn">Date of birth (to verify identity)</td><td><span class="pill pg">08/14/1987</span></td></tr>
+          <tr><td class="fn">Mobile phone (primary contact)</td><td><span class="pill pg">(832) 555-9045</span></td></tr>
+          <tr><td class="fn">Home phone (secondary)</td><td><span class="pill pg">(713) 555-1782</span></td></tr>
+          <tr><td class="fn">Contact email</td><td><span class="pill pg">daniel.thompson@email.com</span></td></tr>
+          <tr><td class="fn">Assigned provider</td><td><span class="pill pg">Dr. Emily Carter</span></td></tr>
+          <tr><td class="fn">Referring provider</td><td><span class="pill pg">Dr. Mark Wilson</span></td></tr>
+          <tr><td class="fn">Primary insurance</td><td><span class="pill pg">Blue Cross Blue Shield — BCBS Gold Plus</span></td></tr>
+          <tr><td class="fn">Co-pay amount</td><td><span class="pill pg">$25</span></td></tr>
+          <tr><td class="fn">Billing note (mention at end)</td><td><span class="pill pg">Copay due at visit</span></td></tr>
+          <tr><td class="fn">Allow SMS confirmation</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Allow email confirmation</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Leave message with (if no answer)</td><td><span class="pill pg">Spouse</span></td></tr>
+        </tbody>
+      </table>
+      <div class="deliv">
+        <div class="deliv-label">Deliverable</div>
+        <div class="deliv-text">A written phone scheduling script (greeting → information gathering → confirmation) plus a short SMS or email confirmation message template. Must include the patient's name, provider name, co-pay amount, and appointment reminder.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="pcard">
+    <div class="pcard-head">
+      <div class="pnum">2</div>
+      <div>
+        <div class="pcard-title">Patient intake form completion</div>
+        <div class="pcard-tool">Documentation / Data entry</div>
+      </div>
+    </div>
+    <div class="pcard-body">
+      <div class="intro-box">
+        <p><strong>What you are doing:</strong> You are filling out a patient intake form — the form a patient would normally fill out themselves when they first walk into a clinic. In a virtual setting, the Medical VA fills this on the patient's behalf using information the patient provided over the phone, via email, or through a patient portal.</p>
+        <p><strong>Why this matters:</strong> The intake form is the foundation of a patient's medical record. Every section — from demographics to employer details to stats — feeds into the systems that doctors, billing teams, and insurance companies use. An incomplete or inaccurate intake form causes delays, incorrect billing, and even incorrect treatment. You are responsible for getting every field right.</p>
+        <p><strong>What to produce:</strong> Go through each section below, enter every piece of information exactly as shown, and at the end write a short list of fields you would call the patient back to confirm verbally (e.g. fields that could change, or sensitive data like SSN that you'd verify before submitting).</p>
+      </div>
+
+      <div class="slabel">Section 1 — Who (personal identity)</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Title</td><td><span class="pill pg">Mr.</span></td></tr>
+          <tr><td class="fn">First name</td><td><span class="pill pg">Daniel</span></td></tr>
+          <tr><td class="fn">Middle name</td><td><span class="pill pg">James</span></td></tr>
+          <tr><td class="fn">Last name</td><td><span class="pill pg">Thompson</span></td></tr>
+          <tr><td class="fn">Preferred name</td><td><span class="pill pg">Dan</span></td></tr>
+          <tr><td class="fn">Suffix</td><td><span class="pill pg">Jr.</span></td></tr>
+          <tr><td class="fn">External ID</td><td><span class="pill pg">EXT-20458</span></td></tr>
+          <tr><td class="fn">Date of birth</td><td><span class="pill pg">08/14/1987</span></td></tr>
+          <tr><td class="fn">Birth sex / Gender identity</td><td><span class="pill pg">Male</span></td></tr>
+          <tr><td class="fn">Pronouns</td><td><span class="pill pg">He/Him</span></td></tr>
+          <tr><td class="fn">Marital status</td><td><span class="pill pg">Married</span></td></tr>
+          <tr><td class="fn">SSN</td><td><span class="pill pg">421-55-7812</span></td></tr>
+          <tr><td class="fn">License / ID number</td><td><span class="pill pg">D8921457</span></td></tr>
+          <tr><td class="fn">User defined tags</td><td><span class="pill pg">Veteran / English Speaker / Non-Smoker / Portal User</span></td></tr>
+          <tr><td class="fn">Billing note</td><td><span class="pill pg">Copay due at visit</span></td></tr>
+          <tr><td class="fn">Previous name</td><td><span class="pill pg">Daniel Reed Thompson</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Section 2 — Contact</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Address line 1</td><td><span class="pill pg">2458 Maple Ridge Drive</span></td></tr>
+          <tr><td class="fn">Address line 2</td><td><span class="pill pg">Apt 5B</span></td></tr>
+          <tr><td class="fn">City / State / Zip</td><td><span class="pill pg">Houston, Texas 77002</span></td></tr>
+          <tr><td class="fn">Country / County</td><td><span class="pill pg">United States / Harris</span></td></tr>
+          <tr><td class="fn">Home phone</td><td><span class="pill pg">(713) 555-1782</span></td></tr>
+          <tr><td class="fn">Work phone</td><td><span class="pill pg">(713) 555-6631</span></td></tr>
+          <tr><td class="fn">Mobile phone</td><td><span class="pill pg">(832) 555-9045</span></td></tr>
+          <tr><td class="fn">Contact email</td><td><span class="pill pg">daniel.thompson@email.com</span></td></tr>
+          <tr><td class="fn">Trusted email</td><td><span class="pill pg">sarah.thompson@email.com</span></td></tr>
+          <tr><td class="fn">Mother's name</td><td><span class="pill pg">Patricia Thompson</span></td></tr>
+          <tr><td class="fn">Emergency contact / phone</td><td><span class="pill pg">Sarah Thompson — (713) 555-2088</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Section 3 — Employer</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Occupation</td><td><span class="pill pg">Software Engineer</span></td></tr>
+          <tr><td class="fn">Employer name</td><td><span class="pill pg">BrightCore Technologies</span></td></tr>
+          <tr><td class="fn">Employer address</td><td><span class="pill pg">900 Innovation Blvd, Suite 400, Houston TX 77010</span></td></tr>
+          <tr><td class="fn">Industry</td><td><span class="pill pg">Information Technology</span></td></tr>
+          <tr><td class="fn">Employment start date</td><td><span class="pill pg">06/15/2019</span></td></tr>
+          <tr><td class="fn">Employment end date</td><td><span class="pill pg">N/A</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Section 4 — Stats (demographics)</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Language</td><td><span class="pill pg">English</span></td></tr>
+          <tr><td class="fn">Ethnicity</td><td><span class="pill pg">Not Hispanic or Latino</span></td></tr>
+          <tr><td class="fn">Race</td><td><span class="pill pg">White</span></td></tr>
+          <tr><td class="fn">Nationality</td><td><span class="pill pg">American</span></td></tr>
+          <tr><td class="fn">Family size</td><td><span class="pill pg">4</span></td></tr>
+          <tr><td class="fn">Monthly income</td><td><span class="pill pg">$7,800</span></td></tr>
+          <tr><td class="fn">Financial review date</td><td><span class="pill pg">01/10/2025</span></td></tr>
+          <tr><td class="fn">Homeless / Migrant / Interpreter</td><td><span class="pill pg">No / No / No</span></td></tr>
+          <tr><td class="fn">Referral source</td><td><span class="pill pg">Online Search</span></td></tr>
+          <tr><td class="fn">Religion</td><td><span class="pill pg">Christian</span></td></tr>
+          <tr><td class="fn">Tribal affiliations</td><td><span class="pill pg">None</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="deliv">
+        <div class="deliv-label">Deliverable</div>
+        <div class="deliv-text">Fully completed intake form with all fields filled in. Attach a separate note listing which fields you would verify with the patient by phone before submitting, and briefly explain why each one needs verbal confirmation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 3 -->
+  <div class="pcard">
+    <div class="pcard-head">
+      <div class="pnum">3</div>
+      <div>
+        <div class="pcard-title">Insurance verification</div>
+        <div class="pcard-tool">Insurance / Documentation</div>
+      </div>
+    </div>
+    <div class="pcard-body">
+      <div class="intro-box">
+        <p><strong>What you are doing:</strong> You are verifying a patient's insurance — meaning you are reading through all the insurance information on file and confirming it is complete, correct, and ready to be used for billing. Daniel Thompson has three insurance layers: a primary, a secondary, and a tertiary. Most patients only have one or two, so having all three is a great way to practice.</p>
+        <p><strong>Why this matters:</strong> Insurance verification is one of the most important tasks a Medical VA performs. If a policy number is wrong, the claim gets rejected and the practice doesn't get paid. If the co-pay is listed incorrectly, the patient is charged the wrong amount. If you forget to enter the secondary insurance, the patient might be billed for something their second insurer would have covered. Your accuracy here directly affects the clinic's revenue and the patient's experience.</p>
+        <p><strong>What to produce:</strong> First, fill out the insurance summary for all three layers using the fields below. Then create a reusable 10-point checklist — a list of 10 things any Medical VA should verify for any patient's insurance before marking it as confirmed. Think: Is the effective date current? Is the co-pay recorded? Is the subscriber relationship correct?</p>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot ld-g"></div> Primary insurance (Blue Cross Blue Shield)</div>
+        <div class="legend-item"><div class="legend-dot ld-a"></div> Secondary insurance (Aetna)</div>
+        <div class="legend-item"><div class="legend-dot ld-b"></div> Tertiary insurance (Medicaid)</div>
+      </div>
+
+      <div class="slabel">Primary insurance — Blue Cross Blue Shield</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Provider / Plan name</td><td><span class="pill pg">Blue Cross Blue Shield — BCBS Gold Plus</span></td></tr>
+          <tr><td class="fn">Subscriber name</td><td><span class="pill pg">Daniel J Thompson</span></td></tr>
+          <tr><td class="fn">Subscriber relationship to patient</td><td><span class="pill pg">Self</span></td></tr>
+          <tr><td class="fn">Policy number</td><td><span class="pill pg">BC45789211</span></td></tr>
+          <tr><td class="fn">Group number</td><td><span class="pill pg">G890221</span></td></tr>
+          <tr><td class="fn">Effective date</td><td><span class="pill pg">01/01/2025</span></td></tr>
+          <tr><td class="fn">Subscriber DOB</td><td><span class="pill pg">08/14/1987</span></td></tr>
+          <tr><td class="fn">Subscriber employer</td><td><span class="pill pg">BrightCore Technologies</span></td></tr>
+          <tr><td class="fn">Subscriber phone</td><td><span class="pill pg">(832) 555-9045</span></td></tr>
+          <tr><td class="fn">Co-pay</td><td><span class="pill pg">$25</span></td></tr>
+          <tr><td class="fn">Accept assignment</td><td><span class="pill pg">Yes</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Secondary insurance — Aetna</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Provider / Plan name</td><td><span class="pill pa">Aetna — Aetna Silver Care</span></td></tr>
+          <tr><td class="fn">Subscriber name</td><td><span class="pill pa">Sarah Thompson</span></td></tr>
+          <tr><td class="fn">Subscriber relationship to patient</td><td><span class="pill pa">Spouse</span></td></tr>
+          <tr><td class="fn">Policy number</td><td><span class="pill pa">AT9934811</span></td></tr>
+          <tr><td class="fn">Group number</td><td><span class="pill pa">AET55672</span></td></tr>
+          <tr><td class="fn">Effective date</td><td><span class="pill pa">01/01/2025</span></td></tr>
+          <tr><td class="fn">Subscriber DOB</td><td><span class="pill pa">11/03/1988</span></td></tr>
+          <tr><td class="fn">Subscriber SSN</td><td><span class="pill pa">388-21-5544</span></td></tr>
+          <tr><td class="fn">Subscriber employer</td><td><span class="pill pa">Memorial Health Group</span></td></tr>
+          <tr><td class="fn">Subscriber phone</td><td><span class="pill pa">(713) 555-2088</span></td></tr>
+          <tr><td class="fn">Co-pay</td><td><span class="pill pa">$15</span></td></tr>
+          <tr><td class="fn">Accept assignment</td><td><span class="pill pa">Yes</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Tertiary insurance — Medicaid</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Provider / Plan name</td><td><span class="pill pb">Medicaid — Texas Medicaid Basic</span></td></tr>
+          <tr><td class="fn">Subscriber name</td><td><span class="pill pb">Daniel J Thompson</span></td></tr>
+          <tr><td class="fn">Subscriber relationship to patient</td><td><span class="pill pb">Self</span></td></tr>
+          <tr><td class="fn">Policy number</td><td><span class="pill pb">TXM5588123</span></td></tr>
+          <tr><td class="fn">Group number</td><td><span class="pill pb">TXG-1100</span></td></tr>
+          <tr><td class="fn">Effective date</td><td><span class="pill pb">02/01/2025</span></td></tr>
+          <tr><td class="fn">Subscriber DOB</td><td><span class="pill pb">08/14/1987</span></td></tr>
+          <tr><td class="fn">Subscriber phone</td><td><span class="pill pb">(832) 555-9045</span></td></tr>
+          <tr><td class="fn">Co-pay</td><td><span class="pill pb">$0</span></td></tr>
+          <tr><td class="fn">Accept assignment</td><td><span class="pill pb">Yes</span></td></tr>
+        </tbody>
+      </table>
+      <div class="deliv">
+        <div class="deliv-label">Deliverable</div>
+        <div class="deliv-text">Completed insurance summary for all 3 insurance layers + a written 10-point insurance verification checklist that can be reused for any future patient.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 4 -->
+  <div class="pcard">
+    <div class="pcard-head">
+      <div class="pnum">4</div>
+      <div>
+        <div class="pcard-title">Airtable patient database — build all 9 tables</div>
+        <div class="pcard-tool">Airtable (free account required)</div>
+      </div>
+    </div>
+    <div class="pcard-body">
+      <div class="intro-box">
+        <p><strong>What you are doing:</strong> You are building a digital patient database from scratch using Airtable — a free, beginner-friendly tool that works like a spreadsheet but is far more powerful. You will create 9 separate tables, one for each section of the patient record, and enter Daniel Thompson's data across all of them.</p>
+        <p><strong>Why this matters:</strong> In real medical offices, patient data is stored across multiple systems and tables — demographics in one place, insurance in another, employer details in yet another. Learning to organise data this way trains you to think like a records management professional. Airtable also allows you to link tables together, which is exactly how real database systems (like Epic and Athena) work under the hood.</p>
+        <p><strong>How to get started:</strong> Go to <a href="https://airtable.com" target="_blank">airtable.com</a>, create a free account, and create a new base (Airtable's word for a database) called <strong>Patient Records</strong>. Inside that base, create the 9 tables listed below. For each table, create the field names listed in the left column, then enter the patient data shown in the right column. Once all data is entered, use Airtable's <strong>Link to another record</strong> field type to connect the Contact, Choices, Insurance, and other tables back to the Patient Information table.</p>
+      </div>
+
+      <div class="slabel">Table 1 — Patient Information</div>
+      <table class="ftable">
+        <thead><tr><th>Field name (create this in Airtable)</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Title</td><td><span class="pill pg">Mr.</span></td></tr>
+          <tr><td class="fn">First name</td><td><span class="pill pg">Daniel</span></td></tr>
+          <tr><td class="fn">Middle name</td><td><span class="pill pg">James</span></td></tr>
+          <tr><td class="fn">Last name</td><td><span class="pill pg">Thompson</span></td></tr>
+          <tr><td class="fn">Preferred name</td><td><span class="pill pg">Dan</span></td></tr>
+          <tr><td class="fn">Suffix</td><td><span class="pill pg">Jr.</span></td></tr>
+          <tr><td class="fn">External ID</td><td><span class="pill pg">EXT-20458</span></td></tr>
+          <tr><td class="fn">Date of birth</td><td><span class="pill pg">08/14/1987</span></td></tr>
+          <tr><td class="fn">Birth sex</td><td><span class="pill pg">Male</span></td></tr>
+          <tr><td class="fn">SSN</td><td><span class="pill pg">421-55-7812</span></td></tr>
+          <tr><td class="fn">License / ID</td><td><span class="pill pg">D8921457</span></td></tr>
+          <tr><td class="fn">Marital status</td><td><span class="pill pg">Married</span></td></tr>
+          <tr><td class="fn">Gender identity</td><td><span class="pill pg">Male</span></td></tr>
+          <tr><td class="fn">Pronouns</td><td><span class="pill pg">He/Him</span></td></tr>
+          <tr><td class="fn">User defined tags</td><td><span class="pill pg">Veteran / English Speaker / Non-Smoker / Portal User</span></td></tr>
+          <tr><td class="fn">Billing note</td><td><span class="pill pg">Copay due at visit</span></td></tr>
+          <tr><td class="fn">Previous name</td><td><span class="pill pg">Daniel Reed Thompson</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 2 — Contact</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Address line 1</td><td><span class="pill pg">2458 Maple Ridge Drive</span></td></tr>
+          <tr><td class="fn">Address line 2</td><td><span class="pill pg">Apt 5B</span></td></tr>
+          <tr><td class="fn">City</td><td><span class="pill pg">Houston</span></td></tr>
+          <tr><td class="fn">State</td><td><span class="pill pg">Texas</span></td></tr>
+          <tr><td class="fn">Postal code</td><td><span class="pill pg">77002</span></td></tr>
+          <tr><td class="fn">Country</td><td><span class="pill pg">United States</span></td></tr>
+          <tr><td class="fn">County</td><td><span class="pill pg">Harris</span></td></tr>
+          <tr><td class="fn">Mother's name</td><td><span class="pill pg">Patricia Thompson</span></td></tr>
+          <tr><td class="fn">Emergency contact name</td><td><span class="pill pg">Sarah Thompson</span></td></tr>
+          <tr><td class="fn">Emergency phone</td><td><span class="pill pg">(713) 555-2088</span></td></tr>
+          <tr><td class="fn">Home phone</td><td><span class="pill pg">(713) 555-1782</span></td></tr>
+          <tr><td class="fn">Work phone</td><td><span class="pill pg">(713) 555-6631</span></td></tr>
+          <tr><td class="fn">Mobile phone</td><td><span class="pill pg">(832) 555-9045</span></td></tr>
+          <tr><td class="fn">Contact email</td><td><span class="pill pg">daniel.thompson@email.com</span></td></tr>
+          <tr><td class="fn">Trusted email</td><td><span class="pill pg">sarah.thompson@email.com</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 3 — Choices</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Provider</td><td><span class="pill pg">Dr. Emily Carter</span></td></tr>
+          <tr><td class="fn">Provider since date</td><td><span class="pill pg">01/12/2022</span></td></tr>
+          <tr><td class="fn">Referring provider</td><td><span class="pill pg">Dr. Mark Wilson</span></td></tr>
+          <tr><td class="fn">Pharmacy</td><td><span class="pill pg">CVS Pharmacy - Main St</span></td></tr>
+          <tr><td class="fn">HIPAA notice received</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Allow voice message</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Leave message with</td><td><span class="pill pg">Spouse</span></td></tr>
+          <tr><td class="fn">Allow mail message</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Allow SMS</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Allow email</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Allow patient portal</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">CMS portal login</td><td><span class="pill pg">danielt87</span></td></tr>
+          <tr><td class="fn">Allow health information exchange</td><td><span class="pill pg">Yes</span></td></tr>
+          <tr><td class="fn">Immunization registry status</td><td><span class="pill pg">Active</span></td></tr>
+          <tr><td class="fn">Immunization registry effective date</td><td><span class="pill pg">03/01/2022</span></td></tr>
+          <tr><td class="fn">Publicity code</td><td><span class="pill pg">Standard</span></td></tr>
+          <tr><td class="fn">Protection indicator</td><td><span class="pill pg">No</span></td></tr>
+          <tr><td class="fn">Patient categories</td><td><span class="pill pg">General Medicine, Hypertension Monitoring</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 4 — Employer</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Occupation</td><td><span class="pill pg">Software Engineer</span></td></tr>
+          <tr><td class="fn">Employer name</td><td><span class="pill pg">BrightCore Technologies</span></td></tr>
+          <tr><td class="fn">Employer address line 1</td><td><span class="pill pg">900 Innovation Blvd</span></td></tr>
+          <tr><td class="fn">Employer address line 2</td><td><span class="pill pg">Suite 400</span></td></tr>
+          <tr><td class="fn">City / State / Zip</td><td><span class="pill pg">Houston, Texas 77010</span></td></tr>
+          <tr><td class="fn">Country</td><td><span class="pill pg">United States</span></td></tr>
+          <tr><td class="fn">Industry</td><td><span class="pill pg">Information Technology</span></td></tr>
+          <tr><td class="fn">Employment start date</td><td><span class="pill pg">06/15/2019</span></td></tr>
+          <tr><td class="fn">Employment end date</td><td><span class="pill pg">N/A</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 5 — Stats</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Language</td><td><span class="pill pg">English</span></td></tr>
+          <tr><td class="fn">Ethnicity</td><td><span class="pill pg">Not Hispanic or Latino</span></td></tr>
+          <tr><td class="fn">Race</td><td><span class="pill pg">White</span></td></tr>
+          <tr><td class="fn">Nationality</td><td><span class="pill pg">American</span></td></tr>
+          <tr><td class="fn">Family size</td><td><span class="pill pg">4</span></td></tr>
+          <tr><td class="fn">Financial review date</td><td><span class="pill pg">01/10/2025</span></td></tr>
+          <tr><td class="fn">Monthly income</td><td><span class="pill pg">$7,800</span></td></tr>
+          <tr><td class="fn">Homeless</td><td><span class="pill pg">No</span></td></tr>
+          <tr><td class="fn">Interpreter needed</td><td><span class="pill pg">No</span></td></tr>
+          <tr><td class="fn">Migrant / Seasonal</td><td><span class="pill pg">No</span></td></tr>
+          <tr><td class="fn">Referral source</td><td><span class="pill pg">Online Search</span></td></tr>
+          <tr><td class="fn">VFC eligibility</td><td><span class="pill pg">Not Eligible</span></td></tr>
+          <tr><td class="fn">Religion</td><td><span class="pill pg">Christian</span></td></tr>
+          <tr><td class="fn">Tribal affiliations</td><td><span class="pill pg">None</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 6 — Related / Guardian</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Guardian name</td><td><span class="pill pg">Sarah Thompson</span></td></tr>
+          <tr><td class="fn">Relationship to patient</td><td><span class="pill pg">Spouse</span></td></tr>
+          <tr><td class="fn">Sex</td><td><span class="pill pg">Female</span></td></tr>
+          <tr><td class="fn">Address</td><td><span class="pill pg">2458 Maple Ridge Drive, Houston TX 77002</span></td></tr>
+          <tr><td class="fn">Country</td><td><span class="pill pg">United States</span></td></tr>
+          <tr><td class="fn">Phone</td><td><span class="pill pg">(713) 555-2088</span></td></tr>
+          <tr><td class="fn">Work phone</td><td><span class="pill pg">(713) 555-9012</span></td></tr>
+          <tr><td class="fn">Email</td><td><span class="pill pg">sarah.thompson@email.com</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 7 — Primary Insurance</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Insurance provider</td><td><span class="pill pg">Blue Cross Blue Shield</span></td></tr>
+          <tr><td class="fn">Plan name</td><td><span class="pill pg">BCBS Gold Plus</span></td></tr>
+          <tr><td class="fn">Subscriber name</td><td><span class="pill pg">Daniel J Thompson</span></td></tr>
+          <tr><td class="fn">Subscriber relationship</td><td><span class="pill pg">Self</span></td></tr>
+          <tr><td class="fn">Policy number</td><td><span class="pill pg">BC45789211</span></td></tr>
+          <tr><td class="fn">Group number</td><td><span class="pill pg">G890221</span></td></tr>
+          <tr><td class="fn">Effective date</td><td><span class="pill pg">01/01/2025</span></td></tr>
+          <tr><td class="fn">Subscriber DOB</td><td><span class="pill pg">08/14/1987</span></td></tr>
+          <tr><td class="fn">Subscriber SSN</td><td><span class="pill pg">421-55-7812</span></td></tr>
+          <tr><td class="fn">Subscriber employer</td><td><span class="pill pg">BrightCore Technologies</span></td></tr>
+          <tr><td class="fn">Subscriber address</td><td><span class="pill pg">2458 Maple Ridge Drive, Apt 5B, Houston TX 77002</span></td></tr>
+          <tr><td class="fn">Subscriber phone</td><td><span class="pill pg">(832) 555-9045</span></td></tr>
+          <tr><td class="fn">Co-pay</td><td><span class="pill pg">$25</span></td></tr>
+          <tr><td class="fn">Accept assignment</td><td><span class="pill pg">Yes</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 8 — Secondary Insurance</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Insurance provider</td><td><span class="pill pa">Aetna</span></td></tr>
+          <tr><td class="fn">Plan name</td><td><span class="pill pa">Aetna Silver Care</span></td></tr>
+          <tr><td class="fn">Subscriber name</td><td><span class="pill pa">Sarah Thompson</span></td></tr>
+          <tr><td class="fn">Subscriber relationship</td><td><span class="pill pa">Spouse</span></td></tr>
+          <tr><td class="fn">Policy number</td><td><span class="pill pa">AT9934811</span></td></tr>
+          <tr><td class="fn">Group number</td><td><span class="pill pa">AET55672</span></td></tr>
+          <tr><td class="fn">Effective date</td><td><span class="pill pa">01/01/2025</span></td></tr>
+          <tr><td class="fn">Subscriber DOB</td><td><span class="pill pa">11/03/1988</span></td></tr>
+          <tr><td class="fn">Subscriber SSN</td><td><span class="pill pa">388-21-5544</span></td></tr>
+          <tr><td class="fn">Subscriber employer</td><td><span class="pill pa">Memorial Health Group</span></td></tr>
+          <tr><td class="fn">Subscriber employer address</td><td><span class="pill pa">1200 Medical Parkway, Houston TX 77030</span></td></tr>
+          <tr><td class="fn">Subscriber address</td><td><span class="pill pa">2458 Maple Ridge Drive, Apt 5B, Houston TX 77002</span></td></tr>
+          <tr><td class="fn">Subscriber phone</td><td><span class="pill pa">(713) 555-2088</span></td></tr>
+          <tr><td class="fn">Co-pay</td><td><span class="pill pa">$15</span></td></tr>
+          <tr><td class="fn">Accept assignment</td><td><span class="pill pa">Yes</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Table 9 — Tertiary Insurance</div>
+      <table class="ftable">
+        <thead><tr><th>Field name</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Insurance provider</td><td><span class="pill pb">Medicaid</span></td></tr>
+          <tr><td class="fn">Plan name</td><td><span class="pill pb">Texas Medicaid Basic</span></td></tr>
+          <tr><td class="fn">Subscriber name</td><td><span class="pill pb">Daniel J Thompson</span></td></tr>
+          <tr><td class="fn">Subscriber relationship</td><td><span class="pill pb">Self</span></td></tr>
+          <tr><td class="fn">Policy number</td><td><span class="pill pb">TXM5588123</span></td></tr>
+          <tr><td class="fn">Group number</td><td><span class="pill pb">TXG-1100</span></td></tr>
+          <tr><td class="fn">Effective date</td><td><span class="pill pb">02/01/2025</span></td></tr>
+          <tr><td class="fn">Subscriber DOB</td><td><span class="pill pb">08/14/1987</span></td></tr>
+          <tr><td class="fn">Subscriber SSN</td><td><span class="pill pb">421-55-7812</span></td></tr>
+          <tr><td class="fn">Subscriber employer</td><td><span class="pill pb">N/A</span></td></tr>
+          <tr><td class="fn">Subscriber address</td><td><span class="pill pb">2458 Maple Ridge Drive, Apt 5B, Houston TX 77002</span></td></tr>
+          <tr><td class="fn">Subscriber phone</td><td><span class="pill pb">(832) 555-9045</span></td></tr>
+          <tr><td class="fn">Co-pay</td><td><span class="pill pb">$0</span></td></tr>
+          <tr><td class="fn">Accept assignment</td><td><span class="pill pb">Yes</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="deliv">
+        <div class="deliv-label">Deliverable</div>
+        <div class="deliv-text">Share your Airtable base link with your trainer. All 9 tables must be fully built with the correct field names and populated with Daniel Thompson's data. The tables should also be linked to each other using Airtable's Link to another record feature where applicable.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 5 — EMR -->
+  <div class="pcard pcard-emr">
+    <div class="pcard-head">
+      <div class="pnum">5</div>
+      <div>
+        <div class="pcard-title">EMR practical — register a patient in OpenEMR</div>
+        <div class="pcard-tool">OpenEMR demo (live system)</div>
+      </div>
+    </div>
+    <div class="pcard-body">
+      <div class="intro-box">
+        <p><strong>What you are doing:</strong> You are logging into a real, live Electronic Medical Records (EMR) system called OpenEMR and registering Daniel Thompson as a brand new patient. This means you will navigate the actual software that clinics use, find the correct screens, and enter all his information — demographics, preferences, and all three insurance layers — exactly as a working Medical VA would on their first day at a job.</p>
+        <p><strong>Why this matters:</strong> An EMR system is the central nervous system of any medical practice. Every appointment, every prescription, every insurance claim, and every patient communication flows through it. As a Medical VA, you will spend a large portion of your working day inside an EMR. Practising in a demo environment is the safest and best way to get comfortable before going live with real patients. Mistakes in a demo cost nothing. Mistakes in a real system can affect patient care and clinic revenue.</p>
+        <p><strong>How the demo works:</strong> OpenEMR provides a free, publicly accessible demo version of their software. You do not need to install anything — just click the link below, pick any available demo instance, and log in with the credentials shown on that page. The system resets periodically, so your entries may not be saved forever, but that is fine for this exercise. Your deliverable is a screenshot taken immediately after saving.</p>
+      </div>
+
+      <div class="emr-link-box">
+        <div class="emr-link-label">Demo login link</div>
+        <a class="emr-link-url" href="https://www.open-emr.org/demo/" target="_blank">&#8599; https://www.open-emr.org/demo/</a>
+        <div class="emr-note">On the demo page, select any available instance and use the login credentials shown (usually username: <strong>admin</strong> / password: <strong>pass</strong>). Once inside, navigate to <strong>Patient → New/Search</strong> from the top menu to begin.</div>
+      </div>
+
+      <div class="slabel">Step 1 — Demographics tab</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Title / Full name / Suffix</td><td><span class="pill pb">Mr. Daniel James Thompson Jr.</span></td></tr>
+          <tr><td class="fn">Preferred name</td><td><span class="pill pb">Dan</span></td></tr>
+          <tr><td class="fn">Date of birth</td><td><span class="pill pb">08/14/1987</span></td></tr>
+          <tr><td class="fn">Birth sex / Gender identity / Pronouns</td><td><span class="pill pb">Male / Male / He/Him</span></td></tr>
+          <tr><td class="fn">Sexual orientation</td><td><span class="pill pb">Heterosexual</span></td></tr>
+          <tr><td class="fn">Marital status</td><td><span class="pill pb">Married</span></td></tr>
+          <tr><td class="fn">SSN</td><td><span class="pill pb">421-55-7812</span></td></tr>
+          <tr><td class="fn">License / ID</td><td><span class="pill pb">D8921457</span></td></tr>
+          <tr><td class="fn">Address</td><td><span class="pill pb">2458 Maple Ridge Drive, Apt 5B, Houston TX 77002</span></td></tr>
+          <tr><td class="fn">Home / Work / Mobile phone</td><td><span class="pill pb">(713) 555-1782 / (713) 555-6631 / (832) 555-9045</span></td></tr>
+          <tr><td class="fn">Email</td><td><span class="pill pb">daniel.thompson@email.com</span></td></tr>
+          <tr><td class="fn">Emergency contact / phone</td><td><span class="pill pb">Sarah Thompson — (713) 555-2088</span></td></tr>
+          <tr><td class="fn">Race / Ethnicity / Language</td><td><span class="pill pb">White / Not Hispanic or Latino / English</span></td></tr>
+          <tr><td class="fn">Occupation / Employer</td><td><span class="pill pb">Software Engineer / BrightCore Technologies</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Step 2 — Choices / Preferences tab</div>
+      <table class="ftable">
+        <thead><tr><th>Field</th><th>Data to enter</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Provider</td><td><span class="pill pb">Dr. Emily Carter</span></td></tr>
+          <tr><td class="fn">Provider since</td><td><span class="pill pb">01/12/2022</span></td></tr>
+          <tr><td class="fn">Referring provider</td><td><span class="pill pb">Dr. Mark Wilson</span></td></tr>
+          <tr><td class="fn">Pharmacy</td><td><span class="pill pb">CVS Pharmacy - Main St</span></td></tr>
+          <tr><td class="fn">HIPAA notice received</td><td><span class="pill pb">Yes</span></td></tr>
+          <tr><td class="fn">Allow SMS / Email / Voice / Mail</td><td><span class="pill pb">Yes / Yes / Yes / Yes</span></td></tr>
+          <tr><td class="fn">Leave message with</td><td><span class="pill pb">Spouse</span></td></tr>
+          <tr><td class="fn">Allow patient portal</td><td><span class="pill pb">Yes</span></td></tr>
+          <tr><td class="fn">Patient categories</td><td><span class="pill pb">General Medicine, Hypertension Monitoring</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel">Step 3 — Insurance tab (enter all 3 layers in order)</div>
+      <table class="ftable">
+        <thead><tr><th>Layer</th><th>Provider / Plan</th><th>Policy number</th><th>Co-pay</th></tr></thead>
+        <tbody>
+          <tr><td class="fn">Primary</td><td><span class="pill pg">BCBS — Gold Plus</span></td><td><span class="pill pg">BC45789211</span></td><td><span class="pill pg">$25</span></td></tr>
+          <tr><td class="fn">Secondary</td><td><span class="pill pa">Aetna — Silver Care</span></td><td><span class="pill pa">AT9934811</span></td><td><span class="pill pa">$15</span></td></tr>
+          <tr><td class="fn">Tertiary</td><td><span class="pill pb">Medicaid — TX Basic</span></td><td><span class="pill pb">TXM5588123</span></td><td><span class="pill pb">$0</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="slabel" style="margin-top:20px">Step 4 — Save and verify</div>
+      <div class="step"><div class="sdot">1</div><div class="stext">Click <strong>Save</strong> after completing each tab — do not navigate away without saving or your entries will be lost.</div></div>
+      <div class="step"><div class="sdot">2</div><div class="stext">After saving, go back to <strong>Patient → Search</strong> and search for "Thompson" to confirm the patient was created successfully.</div></div>
+      <div class="step"><div class="sdot">3</div><div class="stext">Open the patient summary screen and check that the name, DOB, insurance, and provider information all display correctly.</div></div>
+      <div class="step"><div class="sdot">4</div><div class="stext">Take a clear, full-screen screenshot of the completed patient summary page. Make sure the patient's name and at least one insurance entry are visible in the screenshot.</div></div>
+
+      <div class="deliv blue">
+        <div class="deliv-label">Deliverable</div>
+        <div class="deliv-text">One clear screenshot of Daniel Thompson's completed patient profile in OpenEMR — showing name, demographics, and insurance information. Submit the screenshot via your training portal or WhatsApp group with the caption: <em>"Project 5 — EMR registration complete."</em></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
